@@ -1,0 +1,4 @@
+storage_path: "postgres://experimentservice:some123safe456password@fullstack-postgres:5432/experimentservicedb?sslmode=disable" 
+address: "localhost:8080"
+timeout: 4s
+idle_timeout: 60s

@@ -1,0 +1,8 @@
+go.work
+*.test
+
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
