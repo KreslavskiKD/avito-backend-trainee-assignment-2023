@@ -24,9 +24,9 @@ type ResponseUH struct {
 
 func GetUserHistory(log *slog.Logger, historyGetter HistoryPreparator, cfg config.Config) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		const op = "handlers.GetUserHistory"
+		const errorPath = "handlers.GetUserHistory"
 		log = log.With(
-			slog.String("op", op),
+			slog.String("errorPath", errorPath),
 			slog.String("request_id", middleware.GetReqID(r.Context())),
 		)
 

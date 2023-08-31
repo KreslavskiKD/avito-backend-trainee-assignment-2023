@@ -23,7 +23,7 @@ func main() {
 	storage, err := db_postgresql.New(cfg.StoragePath)
 
 	if err != nil {
-		log.Error("failed to init database", slog.Attr{
+		log.Error("failed to initialize database", slog.Attr{
 			Key:   "error",
 			Value: slog.StringValue(err.Error()),
 		})
