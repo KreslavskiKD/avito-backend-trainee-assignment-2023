@@ -309,7 +309,7 @@ func (storage *PostgreSqlStorage) PrepareUserHistoryFile(userId int64, year int,
 		if err != nil {
 			return err
 		}
-		fmt.Fprintf(file, "%d;%s;%s;%s\n", userID, segmentName, operation, timestamp.Format("2005-03-17 15:04:05"))
+		fmt.Fprintf(file, "%d;%s;%s;%s\n", userID, segmentName, operation, timestamp.Format("2006-01-02 15:04:05"))
 	}
 
 	return nil
