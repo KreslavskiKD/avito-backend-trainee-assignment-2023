@@ -41,6 +41,13 @@ func main() {
 	router.Get("/", handlers.GetSegments(log, storage))
 
 	// additional functionality
+	router.Get("/status", func(w http.ResponseWriter, r *http.Request) {
+		log.Info("Status asked")
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/text")
+		w.Write([]byte("Success"))
+	})
+
 	router.Get("/get_history", handlers.GetUserHistory(log, storage, *cfg))
 	router.Get("/report/{id}", func(w http.ResponseWriter, r *http.Request) {
 		filePath := chi.URLParam(r, "id") + "_history_report.csv"

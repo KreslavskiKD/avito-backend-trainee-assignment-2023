@@ -7,13 +7,11 @@ services:
       - .env
     ports: 
       - 8080:8080 
-    restart: on-failure
     volumes:
       - .:/usr/src/app/
     depends_on:
       - fullstack-postgres   
-    command: go run cmd/service_api/main.go -b 0.0.0.0       
-
+    command: go run cmd/service_api/main.go 
 
   fullstack-postgres:
     image: postgres:latest
