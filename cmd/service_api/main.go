@@ -20,7 +20,7 @@ func main() {
 	log := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug}))
 	log.Info("Starting...")
 
-	storage, err := db_postgresql.New(cfg.StoragePath)
+	database, err := db_postgresql.New(cfg.StoragePath)
 
 	if err != nil {
 		log.Error("failed to initialize database", slog.Attr{
@@ -36,9 +36,10 @@ func main() {
 	router.Use(middleware.URLFormat)
 
 	// base functionality
-	router.Post("/", handlers.AddSegment(log, storage))
-	router.Delete("/", handlers.DeleteSegment(log, storage))
-	router.Get("/", handlers.GetSegments(log, storage))
+	router.Post("/", handlers.AddSegment(log, database))
+	router.Delete("/", handlers.DeleteSegment(log, database))
+	router.Get("/", handlers.GetSegments(log, database))
+	router.Put("/", handlers.ReassignSegments(log, database))
 
 	// additional functionality
 	router.Get("/status", func(w http.ResponseWriter, r *http.Request) {
@@ -48,7 +49,7 @@ func main() {
 		w.Write([]byte("Success"))
 	})
 
-	router.Get("/get_history", handlers.GetUserHistory(log, storage, *cfg))
+	router.Get("/get_history", handlers.GetUserHistory(log, database, *cfg))
 	router.Get("/report/{id}", func(w http.ResponseWriter, r *http.Request) {
 		filePath := chi.URLParam(r, "id") + "_history_report.csv"
 		http.ServeFile(w, r, filePath)

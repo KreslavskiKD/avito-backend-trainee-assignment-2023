@@ -21,6 +21,10 @@ type SegmentGetter interface {
 	GetSegments(userId int64) ([]string, error)
 }
 
+type SegmentAssigner interface {
+	ReassignSegments(addSegments []string, removeSegments []string, userId int64) error
+}
+
 type HistoryPreparator interface {
 	PrepareUserHistoryFile(userId int64, year int, month time.Month) error
 }

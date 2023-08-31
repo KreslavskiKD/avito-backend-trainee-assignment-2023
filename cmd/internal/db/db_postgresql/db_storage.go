@@ -257,6 +257,20 @@ func (storage *PostgreSqlStorage) GetSegments(userId int64) ([]string, error) {
 	return segments, nil
 }
 
+func (storage *PostgreSqlStorage) ReassignSegments(addSegments []string, removeSegments []string, userId int64) error {
+	const errorPath = "storage.postgres.ReassignSegments"
+
+	err := storage.RemoveSegmentsFromUser(removeSegments, userId)
+	if err != nil {
+		return fmt.Errorf("%s: %w", errorPath, err)
+	}
+	err = storage.AddSegmentsToUser(addSegments, userId)
+	if err != nil {
+		return fmt.Errorf("%s: %w", errorPath, err)
+	}
+	return nil
+}
+
 func (storage *PostgreSqlStorage) PrepareUserHistoryFile(userId int64, year int, month time.Month) error {
 	startOfMonth := time.Date(year, month, 1, 0, 0, 0, 0, time.UTC)
 	endOfMonth := startOfMonth.AddDate(0, 1, 0).Add(-time.Second)

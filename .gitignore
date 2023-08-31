@@ -6,3 +6,5 @@ go.work
 *.dll
 *.so
 *.dylib
+
+*_history_report.csv
